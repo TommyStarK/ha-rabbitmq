@@ -1,0 +1,35 @@
+version: '3.7'
+
+networks: 
+  harmq:
+
+services:
+  rabbitmq_node_1:
+    image: harabbitmq:latest
+    hostname: rmq1
+    environment:
+      - ERLANG_COOKIE = {$ERLANG_COOKIE}
+    ports:
+      - 127.0.0.1:5551:15672
+    networks:
+      - harmq
+
+  rabbitmq_node_2:
+    image: harabbitmq:latest
+    hostname: rmq2
+    environment:
+      - ERLANG_COOKIE = {$ERLANG_COOKIE}
+    ports:
+      - 127.0.0.1:5552:15672
+    networks:
+      - harmq
+
+  rabbitmq_node_3:
+    image: harabbitmq:latest
+    hostname: rmq3
+    environment:
+      - ERLANG_COOKIE = {$ERLANG_COOKIE}
+    ports:
+      - 127.0.0.1:5553:15672
+    networks:
+      - harmq
