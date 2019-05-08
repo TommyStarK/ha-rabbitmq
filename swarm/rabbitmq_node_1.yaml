@@ -9,11 +9,13 @@ networks:
 services:
   rabbitmq_node_1:
     image: harabbitmq:latest
-    hostname: rmq1
+    hostname: node1
     deploy:
       replicas: 1
     environment:
-      - ERLANG_COOKIE = {$ERLANG_COOKIE}
+      - ERLANG_COOKIE=$ERLANG_COOKIE
+      - RABBITMQ_NODENAME=node1
+      - CLUSTERED=true
     ports:
       - target: 5671
         publish: 5671
@@ -34,4 +36,4 @@ services:
     networks:
       haOverlay:
         aliases:
-          - rmq1
+          - node1

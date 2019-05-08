@@ -7,8 +7,10 @@ services:
   rabbitmq_node_1:
     image: harabbitmq:latest
     hostname: rmq1
+    container_name: rmq1
     environment:
-      - ERLANG_COOKIE = {$ERLANG_COOKIE}
+      - ERLANG_COOKIE=$ERLANG_COOKIE
+      - CLUSTERED=true
     ports:
       - 127.0.0.1:5551:15672
     networks:
@@ -17,8 +19,13 @@ services:
   rabbitmq_node_2:
     image: harabbitmq:latest
     hostname: rmq2
+    container_name: rmq2
+    depends_on:
+      - rabbitmq_node_1
     environment:
-      - ERLANG_COOKIE = {$ERLANG_COOKIE}
+      - ERLANG_COOKIE=$ERLANG_COOKIE
+      - CLUSTERED=true
+      - CLUSTER_WITH=rmq1
     ports:
       - 127.0.0.1:5552:15672
     networks:
@@ -27,8 +34,13 @@ services:
   rabbitmq_node_3:
     image: harabbitmq:latest
     hostname: rmq3
+    container_name: rmq3
+    depends_on:
+      - rabbitmq_node_1
     environment:
-      - ERLANG_COOKIE = {$ERLANG_COOKIE}
+      - ERLANG_COOKIE=$ERLANG_COOKIE
+      - CLUSTERED=true
+      - CLUSTER_WITH=rmq1
     ports:
       - 127.0.0.1:5553:15672
     networks:
