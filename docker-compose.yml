@@ -5,56 +5,55 @@ networks:
 
 services:
   rabbitmq_node_1:
-    image: harabbitmq:latest
+    image: rabbitmq:3-management-alpine
     hostname: rmq1
     container_name: rmq1
     environment:
-      - ERLANG_COOKIE=$ERLANG_COOKIE
-      - CLUSTERED=true
+      - RABBITMQ_ERLANG_COOKIE=${RABBITMQ_ERLANG_COOKIE}
     ports:
       - 127.0.0.1:5551:15672
     networks:
       - harmq
 
   rabbitmq_node_2:
-    image: harabbitmq:latest
+    image: rabbitmq:3-management-alpine
     hostname: rmq2
     container_name: rmq2
+    depends_on:
+      - rabbitmq_node_1
     command:
-      - /bin/sh
-      - -c 
+      - /bin/bash
+      - -c
       - |
+        rabbitmq-server -detached
         rabbitmqctl stop_app
         rabbitmqctl reset
         rabbitmqctl join_cluster rabbit@rmq1
-    depends_on:
-      - rabbitmq_node_1
+        rabbitmqctl start_app
     environment:
-      - ERLANG_COOKIE=$ERLANG_COOKIE
-      - CLUSTERED=true
-      - CLUSTER_WITH=rmq1
+      - RABBITMQ_ERLANG_COOKIE=${RABBITMQ_ERLANG_COOKIE}
     ports:
       - 127.0.0.1:5552:15672
     networks:
       - harmq
 
   rabbitmq_node_3:
-    image: harabbitmq:latest
+    image: rabbitmq:3-management-alpine
     hostname: rmq3
     container_name: rmq3
+    depends_on:
+      - rabbitmq_node_1
     command:
-      - /bin/sh
-      - -c 
+      - /bin/bash
+      - -c
       - |
+        rabbitmq-server -detached
         rabbitmqctl stop_app
         rabbitmqctl reset
         rabbitmqctl join_cluster rabbit@rmq1
-    depends_on:
-      - rabbitmq_node_1
+        rabbitmqctl start_app
     environment:
-      - ERLANG_COOKIE=$ERLANG_COOKIE
-      - CLUSTERED=true
-      - CLUSTER_WITH=rmq1
+      - RABBITMQ_ERLANG_COOKIE=${RABBITMQ_ERLANG_COOKIE}
     ports:
       - 127.0.0.1:5553:15672
     networks:

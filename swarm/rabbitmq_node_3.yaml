@@ -6,22 +6,22 @@ networks:
 
 services:
   rabbitmq_node_3:
-    image: harabbitmq:latest
+    image: rabbitmq:3-management-alpine
     hostname: node3
     deploy:
       replicas: 1
-    command:
-      - /bin/sh
-      - -c 
+    entrypoint:
+      - /bin/bash
+      - -c
       - |
+        rabbitmq-server -detached
         rabbitmqctl stop_app
         rabbitmqctl reset
-        rabbitmqctl join_cluster rabbit@node1
+        rabbitmqctl join_cluster rabbit@rmq1
+        rabbitmqctl start_app
     environment:
-      - ERLANG_COOKIE=$ERLANG_COOKIE
+      - RABBITMQ_ERLANG_COOKIE=${RABBITMQ_ERLANG_COOKIE}
       - RABBITMQ_NODENAME=node3
-      - CLUSTERED=true
-      - CLUSTERED_WITH=rabbit@node1
     ports:
       - target: 5671
         publish: 5671
