@@ -10,6 +10,13 @@ services:
     hostname: node2
     deploy:
       replicas: 1
+    command:
+      - /bin/sh
+      - -c 
+      - |
+        rabbitmqctl stop_app
+        rabbitmqctl reset
+        rabbitmqctl join_cluster rabbit@node1
     environment:
       - ERLANG_COOKIE=$ERLANG_COOKIE
       - RABBITMQ_NODENAME=node2

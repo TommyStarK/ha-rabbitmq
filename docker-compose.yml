@@ -20,6 +20,13 @@ services:
     image: harabbitmq:latest
     hostname: rmq2
     container_name: rmq2
+    command:
+      - /bin/sh
+      - -c 
+      - |
+        rabbitmqctl stop_app
+        rabbitmqctl reset
+        rabbitmqctl join_cluster rabbit@rmq1
     depends_on:
       - rabbitmq_node_1
     environment:
@@ -35,6 +42,13 @@ services:
     image: harabbitmq:latest
     hostname: rmq3
     container_name: rmq3
+    command:
+      - /bin/sh
+      - -c 
+      - |
+        rabbitmqctl stop_app
+        rabbitmqctl reset
+        rabbitmqctl join_cluster rabbit@rmq1
     depends_on:
       - rabbitmq_node_1
     environment:
