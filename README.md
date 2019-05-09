@@ -8,7 +8,7 @@ You can also run it locally to create and test the `HA` RabbitMQ cluster thanks 
 
 **/!\\** The source code herein is not prodcution ready. It is meant to create, test, learn, manipulate and benchmark a high availability RabbitMQ cluster.
 
-## Build the image
+## Pull the image
 
 Before being able to deploy your stack to your swarm cluster, you must pull the RabbitMQ image
 designed for clustered nodes.
