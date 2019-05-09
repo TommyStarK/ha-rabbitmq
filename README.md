@@ -14,14 +14,14 @@ Before being able to deploy your stack to your swarm cluster, you must build the
 To do so, just run the following:
 
 ```
-$ docker build img/ -t harabbitmq
+$ docker build img/ -t rabbitmq-cluster-alpine:latest
 ```
 ## Local
 
 - To run the cluster locally, just run the following:
 
 ```
-$ export ERLANG_COOKIE="i0DPjMZj3Zz1KTAm"
+$ export RABBITMQ_ERLANG_COOKIE="i0DPjMZj3Zz1KTAm"
 $ docker-compose up
 ```
 
