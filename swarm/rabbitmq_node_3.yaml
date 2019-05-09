@@ -6,23 +6,14 @@ networks:
 
 services:
   rabbitmq_node_3:
-    image: rabbitmq:3-management-alpine
+    image: rabbitmq-cluster-alpine:latest
     hostname: node3
     deploy:
       replicas: 1
-    entrypoint:
-      - /bin/bash
-      - -c
-      - |
-        rabbitmq-server -detached
-        rabbitmqctl stop_app
-        rabbitmqctl reset
-        rabbitmqctl join_cluster rabbit@rmq1
-        rabbitmqctl start_app
-        while true; do sleep 1; done
     environment:
       - RABBITMQ_ERLANG_COOKIE=${RABBITMQ_ERLANG_COOKIE}
       - RABBITMQ_NODENAME=node3
+      - NODE_TO_CLUSTER_WITH=node1
     ports:
       - target: 5671
         publish: 5671
