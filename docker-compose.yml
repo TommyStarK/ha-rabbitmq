@@ -16,7 +16,7 @@ services:
       - rabbitmq_cluster
 
   rabbitmq_node_2:
-    image: rabbitmq-cluster-alpine:latest
+    image: tommystark/rabbitmq-cluster:latest
     hostname: rmq2
     container_name: rmq2
     depends_on:
@@ -30,7 +30,7 @@ services:
       - rabbitmq_cluster
 
   rabbitmq_node_3:
-    image: rabbitmq-cluster-alpine:latest
+    image: tommystark/rabbitmq-cluster:latest
     hostname: rmq3
     container_name: rmq3
     depends_on:

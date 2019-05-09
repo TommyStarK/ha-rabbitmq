@@ -6,7 +6,7 @@ networks:
 
 services:
   rabbitmq_node_3:
-    image: rabbitmq-cluster-alpine:latest
+    image: tommystark/rabbitmq-cluster:latest
     hostname: node3
     deploy:
       replicas: 1

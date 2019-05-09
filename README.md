@@ -10,12 +10,14 @@ You can also run it locally to create and test the `HA` RabbitMQ cluster thanks 
 
 ## Build the image
 
-Before being able to deploy your stack to your swarm cluster, you must build the RabbitMQ image.
+Before being able to deploy your stack to your swarm cluster, you must pull the RabbitMQ image
+designed for clustered nodes.
 To do so, just run the following:
 
 ```
-$ docker build img/ -t rabbitmq-cluster-alpine:latest
+$ docker pull tommystark/rabbitmq-cluster:latest
 ```
+
 ## Local
 
 - To run the cluster locally, just run the following:
