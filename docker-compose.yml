@@ -1,7 +1,7 @@
 version: '3.7'
 
 networks: 
-  harmq:
+  rabbitmq_cluster:
 
 services:
   rabbitmq_node_1:
@@ -13,50 +13,32 @@ services:
     ports:
       - 127.0.0.1:5551:15672
     networks:
-      - harmq
+      - rabbitmq_cluster
 
   rabbitmq_node_2:
-    image: rabbitmq:3-management-alpine
+    image: rabbitmq-cluster-alpine:latest
     hostname: rmq2
     container_name: rmq2
     depends_on:
       - rabbitmq_node_1
-    command:
-      - /bin/bash
-      - -c
-      - |
-        rabbitmq-server -detached
-        rabbitmqctl stop_app
-        rabbitmqctl reset
-        rabbitmqctl join_cluster rabbit@rmq1
-        rabbitmqctl start_app
-        while true; do sleep 1; done
     environment:
       - RABBITMQ_ERLANG_COOKIE=${RABBITMQ_ERLANG_COOKIE}
+      - NODE_TO_CLUSTER_WITH=rmq1
     ports:
       - 127.0.0.1:5552:15672
     networks:
-      - harmq
+      - rabbitmq_cluster
 
   rabbitmq_node_3:
-    image: rabbitmq:3-management-alpine
+    image: rabbitmq-cluster-alpine:latest
     hostname: rmq3
     container_name: rmq3
     depends_on:
       - rabbitmq_node_1
-    command:
-      - /bin/bash
-      - -c
-      - |
-        rabbitmq-server -detached
-        rabbitmqctl stop_app
-        rabbitmqctl reset
-        rabbitmqctl join_cluster rabbit@rmq1
-        rabbitmqctl start_app
-        while true; do sleep 1; done
     environment:
       - RABBITMQ_ERLANG_COOKIE=${RABBITMQ_ERLANG_COOKIE}
+      - NODE_TO_CLUSTER_WITH=rmq1
     ports:
       - 127.0.0.1:5553:15672
     networks:
-      - harmq
+      - rabbitmq_cluster
