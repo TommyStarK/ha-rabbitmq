@@ -38,4 +38,3 @@ $ docker swarm deploy -c swarm/rabbitmq_node_3.yaml rmq3
 ```
 
 Otherwise, see [how to initialize docker swarm](https://docs.docker.com/engine/reference/commandline/swarm_init/).
-
